@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="FloorTile" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Resources/Art/FloorTile.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="2" name="EdgeTile" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Resources/Art/EdgeTile.png" width="32" height="32"/>
+  <tile id="0">
+   <objectgroup draworder="index">
+    <object id="0" x="0" y="0" width="32" height="32"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <layer name="Floor" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzwENADAIwDDu3/RtFLIlFbCZO73l+rD0YenD0oelD0sflj4sfVj6sPRh6cPSh6UPSx+WPix9WPqw9GHpw9KHpQ9LH5Y+LNc+LvQBC2AJAQ==
+  </data>
+ </layer>
+ <layer name="Edges" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzwEJADAMwLAx/6Jvox8JVEB3ZvZIv/PR4qPFR4uPFh8tPlp8tPho8dHio8VHi48WHy0+Wny0+Gjx0eKjxUeLjxYfLT5afLRc+7jQAxQiAYk=
+  </data>
+ </layer>
+</map>
