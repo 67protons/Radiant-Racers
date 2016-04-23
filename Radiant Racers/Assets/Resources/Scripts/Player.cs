@@ -6,15 +6,26 @@ public class Player : MonoBehaviour {
     private Direction _currentDirection;
     private float speed = 10f;
 
-    void Awake()
+    public Vector2 headLocation
     {
+        get { return GridManager.GridPosition(this.transform.position); }
+    }
+    public Vector2 tailLocation
+    {
+        get { return GridManager.GridPosition(
+            new Vector2(this.transform.position.x + Mathf.Sin(this.transform.rotation.eulerAngles.z * Mathf.Deg2Rad),
+                        this.transform.position.y - Mathf.Cos(this.transform.rotation.eulerAngles.z * Mathf.Deg2Rad)));
+        }
+    }
+
+    void Awake()
+    {        
         _currentDirection = Direction.Right;
-        _mainCamera = Camera.main;
+        _mainCamera = Camera.main;        
     }
 
     void Update()
-    {
-        //Debug.Log(_currentDirection);
+    {       
         switch (_currentDirection)
         {
             case Direction.Up:
@@ -32,6 +43,11 @@ public class Player : MonoBehaviour {
         }
 
         this.transform.Translate(Vector2.up * speed * Time.deltaTime);
-        _mainCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -10);
+        _mainCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -10);               
+    }
+
+    public void SetDirection(Direction direction)
+    {
+        this._currentDirection = direction;
     }
 }
