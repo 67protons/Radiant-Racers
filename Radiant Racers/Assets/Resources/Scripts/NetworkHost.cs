@@ -53,16 +53,9 @@ public class NetworkHost : MonoBehaviour {
         byte[] recBuffer = new byte[1024];
         int bufferSize = 1024;
         int dataSize;
-        byte error;
-        NetworkEventType recData = NetworkTransport.Receive(out recHostID, out connectionID, out channelID, recBuffer, bufferSize, out dataSize, out error);
-        if (recHostID == _hostID)
-        {
-            return new ReceiveEvent(recData, connectionID, recBuffer);      
-        }
-        else
-        {
-            return new ReceiveEvent(NetworkEventType.Nothing, connectionID, recBuffer);
-        }
+        byte error;        
+        NetworkEventType recData = NetworkTransport.ReceiveFromHost(_hostID, out connectionID, out channelID, recBuffer, bufferSize, out dataSize, out error);
+        return new ReceiveEvent(recData, connectionID, recBuffer);
     }
 
     public void Send(int connectionID, byte[] data)
