@@ -17,7 +17,7 @@ public class ClientManager : NetworkHost {
         ReceiveEvent eventData = base.Receive();
         if (eventData.type == NetworkEventType.DataEvent)
         {
-            //Debug.Log(this.gameObject.name + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));
+            Debug.Log(this.gameObject.name + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));
         }
 
         base.Send(connectionToServer, System.Text.Encoding.UTF8.GetBytes("Hello Server"));
