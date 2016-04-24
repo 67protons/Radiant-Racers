@@ -15,14 +15,13 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         _grid = this.GetComponent<GridManager>();
-        _server = GameObject.Find("Server").GetComponent<ServerManager>();        
+        _server = GameObject.Find("Server").GetComponent<ServerManager>();
+        _server._gameManager = this;
     }
 
     void Start()
     {
-        StartGame();
-        //byte[] meh = System.BitConverter.GetBytes((char)CellID.None);
-        //Debug.Log(System.BitConverter.ToChar(meh, 0));
+        StartGame();        
     }
 
     void StartGame()
@@ -36,8 +35,7 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                CreatePlayer(i);
-                //_server.Send(i, System.BitConverter.GetBytes(PlayerID.A));                
+                CreatePlayer(i);                             
             }
         }
     }
@@ -67,10 +65,10 @@ public class GameManager : MonoBehaviour {
         playerScript.playerNum = randomNum;
         availableNums.Remove(randomNum);       
 
+        ///Add new Player to dictionary
         Players.Add(connectionID, playerScript);
-
-        //var toSend = new KeyValuePair<MessageType, string>(MessageType.SetUp, JsonUtility.ToJson(randomNum));
-        _server.Send(connectionID, MessageType.SetUp, randomNum);
-        //_server.Send(connectionID, System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(toSend)));
+        
+        ///Send over the playerNum to that player - might take this out later
+        _server.Send(connectionID, MessageType.SetUp, randomNum);        
     }
 }

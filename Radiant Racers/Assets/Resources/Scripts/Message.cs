@@ -2,9 +2,10 @@
 using System.Collections;
 
 public enum MessageType
-{
+{    
     SetUp,
-    StateUpdate,
+    StateUpdate,    
+    Move,
     None
 }
 
@@ -17,5 +18,18 @@ public class Message {
     {       
         this.type = type;
         this.subJson = JsonUtility.ToJson(data);
+    }
+
+    public object GetData()
+    {
+        switch (this.type)
+        {
+            case MessageType.SetUp:
+                return JsonUtility.FromJson<CellID>(subJson);
+            case MessageType.Move:
+                return JsonUtility.FromJson<Direction>(subJson);
+            default:
+                return null;
+        }
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class ServerManager : NetworkHost {
 
+    [HideInInspector]
+    public GameManager _gameManager;
     // Might change this to a list of Player classes in the future
     public List<int> clientList = new List<int>();
 
@@ -19,12 +21,15 @@ public class ServerManager : NetworkHost {
         switch (recEvent.type)
         {
             case NetworkEventType.ConnectEvent:
-                //Debug.Log("New connect from client: " + eventData.connectionID);
-
                 clientList.Add(recEvent.sender);
                 break;
             case NetworkEventType.DataEvent:
-                //Debug.Log(eventData.connectionID + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));              
+                Message message = recEvent.message;
+                if (message.type == MessageType.Move)
+                {
+                    Direction moveDirection = (Direction)message.GetData();
+                    _gameManager.Players[recEvent.sender].SetDirection(moveDirection);
+                }                      
                 break;
             case NetworkEventType.DisconnectEvent:
                 break;

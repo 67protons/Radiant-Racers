@@ -45,8 +45,36 @@ public class Player : MonoBehaviour {
         this.transform.Translate(Vector2.up * speed * Time.deltaTime);                     
     }
 
+    public void SetPosition(Vector2 gridPosition)
+    {
+        gridPosition.x += 0.5f;
+        gridPosition.y = -gridPosition.y - 0.5f;
+        this.transform.position = gridPosition;
+    }
+
     public void SetDirection(Direction direction)
     {
-        this._currentDirection = direction;
+        if (this._currentDirection != OppositeDirection(direction))
+        {
+            SetPosition(GridManager.GridPosition(this.transform.position));
+            this._currentDirection = direction;
+        }            
+    }
+
+    private Direction OppositeDirection(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Up:
+                return Direction.Down;
+            case Direction.Left:
+                return Direction.Right;
+            case Direction.Down:
+                return Direction.Up;
+            case Direction.Right:
+                return Direction.Left;
+            default:
+                return Direction.Up;
+        }
     }
 }
