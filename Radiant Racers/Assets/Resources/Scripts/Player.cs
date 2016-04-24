@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {    
+public class Player : MonoBehaviour {
+    public CellID playerNum;
+
     private Direction _currentDirection;
     private float speed = 10f;
 
