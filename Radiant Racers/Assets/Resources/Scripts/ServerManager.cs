@@ -38,7 +38,7 @@ public class ServerManager : NetworkHost {
         //SendAll(System.Text.Encoding.UTF8.GetBytes("Hello"));        
     }
 
-    void SendAll(MessageType messageType, object data)
+    public void SendAll(MessageType messageType, object data)
     {        
         foreach(int i in clientList)
         {            

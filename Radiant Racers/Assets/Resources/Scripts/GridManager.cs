@@ -59,7 +59,7 @@ public class GridManager : MonoBehaviour {
         int x = (int)location.x, y = (int)location.y;
 
         if (!isValidCell(x, y))
-            throw new System.IndexOutOfRangeException("Invalid cell");            
+            throw new System.IndexOutOfRangeException("Invalid cell");
         return _grid[x][y];
     }
 

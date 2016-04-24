@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
         _currentDirection = Direction.Right;          
     }
 
-    void Update()
+    public void Move()
     {       
         switch (_currentDirection)
         {
@@ -41,8 +41,8 @@ public class Player : MonoBehaviour {
                 this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 270));                
                 break;
         }
-
-        this.transform.Translate(Vector2.up * speed * Time.deltaTime);                     
+        
+        this.transform.Translate(Vector2.up * speed * Time.deltaTime);                
     }
 
     public void SetPosition(Vector2 gridPosition)
