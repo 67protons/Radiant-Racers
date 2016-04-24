@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-    private Camera _mainCamera;
+public class Player : MonoBehaviour {    
     private Direction _currentDirection;
     private float speed = 10f;
 
@@ -20,8 +19,7 @@ public class Player : MonoBehaviour {
 
     void Awake()
     {        
-        _currentDirection = Direction.Right;
-        _mainCamera = Camera.main;        
+        _currentDirection = Direction.Right;          
     }
 
     void Update()
@@ -42,8 +40,7 @@ public class Player : MonoBehaviour {
                 break;
         }
 
-        this.transform.Translate(Vector2.up * speed * Time.deltaTime);
-        _mainCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -10);               
+        this.transform.Translate(Vector2.up * speed * Time.deltaTime);                     
     }
 
     public void SetDirection(Direction direction)

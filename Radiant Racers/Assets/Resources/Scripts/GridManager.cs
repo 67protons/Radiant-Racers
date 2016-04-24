@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour {
-    public static Vector2 gridSize = new Vector2(50, 50);
-    private static List<List<CellID>> _grid = new List<List<CellID>>();  
+    public Vector2 gridSize = new Vector2(50, 50);
+    private List<List<CellID>> _grid = new List<List<CellID>>();  
 
     void Awake()
     {
@@ -35,7 +35,26 @@ public class GridManager : MonoBehaviour {
         return new Vector2(Mathf.FloorToInt(inVector.x), Mathf.FloorToInt(-inVector.y));
     }
 
-    public static CellID GetCell(Vector2 location)
+    public List<Vector2> EmptyCells()
+    {
+        List<Vector2> result = new List<Vector2>();
+
+        for (int x = 1; x < gridSize.x - 1; x++)
+        {
+            for (int y = 1; y < gridSize.y - 1; y++)
+            {
+                Vector2 point = new Vector2(x, y);
+                if (GetCell(point) == CellID.None)
+                {
+                    result.Add(point);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public CellID GetCell(Vector2 location)
     {
         int x = (int)location.x, y = (int)location.y;
 
@@ -44,7 +63,7 @@ public class GridManager : MonoBehaviour {
         return _grid[x][y];
     }
 
-    public static void SetCell(Vector2 location, CellID cell)
+    public void SetCell(Vector2 location, CellID cell)
     {
         int x = (int)location.x, y = (int)location.y;
 
@@ -57,7 +76,7 @@ public class GridManager : MonoBehaviour {
         }
     }
 
-    private static bool isValidCell(int x, int y)
+    private bool isValidCell(int x, int y)
     {
         return (0 <= x && x < gridSize.x && 0 <= y && y < gridSize.y);
     }

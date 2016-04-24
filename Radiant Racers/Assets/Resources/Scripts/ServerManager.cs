@@ -6,9 +6,10 @@ using System.Collections.Generic;
 public class ServerManager : NetworkHost {
 
     // Might change this to a list of Player classes in the future
-    List<int> clientList = new List<int>();
+    public List<int> clientList = new List<int>();
 
     void Awake(){
+        DontDestroyOnLoad(this.gameObject);
         base.Setup(9001, 8);
     }
 
@@ -23,7 +24,7 @@ public class ServerManager : NetworkHost {
                 clientList.Add(eventData.connectionID);
                 break;
             case NetworkEventType.DataEvent:
-                Debug.Log(eventData.connectionID + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));              
+                //Debug.Log(eventData.connectionID + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));              
                 break;
             case NetworkEventType.DisconnectEvent:
                 break;

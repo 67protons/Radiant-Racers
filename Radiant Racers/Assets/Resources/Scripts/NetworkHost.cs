@@ -47,7 +47,6 @@ public class NetworkHost : MonoBehaviour {
 
     public ReceiveEvent Receive()
     {
-        int recHostID;
         int connectionID;
         int channelID;
         byte[] recBuffer = new byte[1024];

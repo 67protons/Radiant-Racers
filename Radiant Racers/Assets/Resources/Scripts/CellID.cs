@@ -2,14 +2,14 @@
 using System.Collections;
 
 public enum CellID {
-    None,
-    Wall,
-    Player1,
-    Player2,
-    Player3,
-    Player4,
-    Player5,
-    Player6,
-    Player7,
-    Player8
+    None = 'N',
+    Wall = 'W',
+    Player1 = '1',
+    Player2 = '2',
+    Player3 = '3',
+    Player4 = '4',
+    Player5 = '5',
+    Player6 = '6',
+    Player7 = '7',
+    Player8 = '8'
 }

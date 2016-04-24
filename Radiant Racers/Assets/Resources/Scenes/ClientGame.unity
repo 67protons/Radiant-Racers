@@ -96,7 +96,7 @@ GameObject:
   - 114: {fileID: 187406829}
   - 114: {fileID: 187406830}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: ClientGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b9ae15b62438249805c8d0b87fd15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSize: {x: 50, y: 50}
 --- !u!1 &367431803
 GameObject:
   m_ObjectHideFlags: 0
