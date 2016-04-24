@@ -56,13 +56,16 @@ public class Player : MonoBehaviour {
         }       
     }
 
-    public void SetDirection(Direction direction)
+    public void SetDirection(Direction direction, bool byPassCheck = false)
     {
-        if (this.isAlive && this._currentDirection != OppositeDirection(direction))
+        if (this.isAlive)
         {
-            SetPosition(GridManager.GridPosition(this.transform.position));
-            this._currentDirection = direction;
-        }            
+            if (byPassCheck || this._currentDirection != OppositeDirection(direction))
+            {
+                SetPosition(GridManager.GridPosition(this.transform.position));
+                this._currentDirection = direction;
+            }            
+        }
     }
 
     private Direction OppositeDirection(Direction direction)

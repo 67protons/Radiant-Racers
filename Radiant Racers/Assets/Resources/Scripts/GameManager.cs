@@ -81,13 +81,13 @@ public class GameManager : MonoBehaviour {
         GameObject newPlayer = (GameObject)Instantiate(Resources.Load("Prefabs/Player") as GameObject, randomCell, Quaternion.identity);
         Player playerScript = newPlayer.GetComponent<Player>();
 
-        ///Set direction (also avoid defaulting into a wall)
-        //This isn't working for some reason
-        if (randomCell.x < _grid.gridSize.x / 2)
-            playerScript.SetDirection(Direction.Right);
+        ///Set direction (also avoid defaulting into a wall)        
+        if (randomCell.x < _grid.gridSize.x / 2){            
+            playerScript.SetDirection(Direction.Right, true);
+        }            
         else if (randomCell.x >= _grid.gridSize.x / 2)
-        {
-            playerScript.SetDirection(Direction.Left);
+        {            
+            playerScript.SetDirection(Direction.Left, true);
         }
 
         ///Choose random playerNum (that isn't already taken)

@@ -26,7 +26,7 @@ public class ServerManager : NetworkHost {
             case NetworkEventType.DataEvent:
                 Message message = recEvent.message;
                 if (message.type == MessageType.Move)
-                {
+                {                    
                     Direction moveDirection = (Direction)message.GetData();
                     _gameManager.Players[recEvent.sender].SetDirection(moveDirection);
                 }                      
