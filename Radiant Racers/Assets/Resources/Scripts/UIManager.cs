@@ -14,4 +14,29 @@ public class UIManager : MonoBehaviour {
             SceneManager.LoadScene("ClientGame");
         }
 	}
+
+    public void PressPlay()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
+    public void PressQuit()
+    {
+
+    }
+
+    public void PressCreate()
+    {
+
+    }
+
+    public void PressJoin()
+    {
+
+    }
+
+    public void PressStart()
+    {
+
+    }
 }

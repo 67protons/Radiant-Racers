@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 public class ClientManager : NetworkHost {
 
     public Player player;
     private Camera _mainCamera;
     private int connectionToServer;
+    //private Message message = new Message(MessageType.SetUp, "blank");    
 
     void Awake()
     {
@@ -23,7 +25,12 @@ public class ClientManager : NetworkHost {
         ReceiveEvent eventData = base.Receive();
         if (eventData.type == NetworkEventType.DataEvent)
         {
-            //Debug.Log(this.gameObject.name + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));
+            var message = JsonUtility.FromJson<Message>(System.Text.Encoding.UTF8.GetString(eventData.data));
+            if (message.type == MessageType.SetUp)
+            {
+                var subMessage = JsonUtility.FromJson<CellID>(message.subJson);
+                Debug.Log(subMessage);
+            }            
         }        
 
         Render();

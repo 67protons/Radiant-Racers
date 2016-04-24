@@ -30,12 +30,11 @@ public class ServerManager : NetworkHost {
                 break;
         }
 
-        SendAll(System.Text.Encoding.UTF8.GetBytes("Hello"));        
+        //SendAll(System.Text.Encoding.UTF8.GetBytes("Hello"));        
     }
 
     void SendAll(byte[] data)
-    {
-        //for (int i = 0; i < clientList.Count; i++)
+    {        
         foreach(int i in clientList)
         {            
             base.Send(i, data);

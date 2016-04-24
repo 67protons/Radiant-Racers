@@ -67,6 +67,10 @@ public class GameManager : MonoBehaviour {
         playerScript.playerNum = randomNum;
         availableNums.Remove(randomNum);       
 
-        Players.Add(connectionID, playerScript);        
+        Players.Add(connectionID, playerScript);
+
+        //var toSend = new KeyValuePair<MessageType, string>(MessageType.SetUp, JsonUtility.ToJson(randomNum));
+        _server.Send(connectionID, System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(new Message(MessageType.SetUp, JsonUtility.ToJson(randomNum)))));
+        //_server.Send(connectionID, System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(toSend)));
     }
 }

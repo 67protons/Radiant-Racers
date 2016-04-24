@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System.IO;
 
 public class NetworkHost : MonoBehaviour {
     private ConnectionConfig _config;
