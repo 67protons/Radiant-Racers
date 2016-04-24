@@ -15,13 +15,13 @@ public class ServerManager : NetworkHost {
 
     void Update()
     {
-        ReceiveEvent eventData = base.Receive();
-        switch (eventData.type)
+        ReceiveEvent recEvent = base.Receive();
+        switch (recEvent.type)
         {
             case NetworkEventType.ConnectEvent:
                 //Debug.Log("New connect from client: " + eventData.connectionID);
 
-                clientList.Add(eventData.connectionID);
+                clientList.Add(recEvent.sender);
                 break;
             case NetworkEventType.DataEvent:
                 //Debug.Log(eventData.connectionID + ": " + System.Text.Encoding.UTF8.GetString(eventData.data));              
@@ -33,11 +33,11 @@ public class ServerManager : NetworkHost {
         //SendAll(System.Text.Encoding.UTF8.GetBytes("Hello"));        
     }
 
-    void SendAll(byte[] data)
+    void SendAll(MessageType messageType, object data)
     {        
         foreach(int i in clientList)
         {            
-            base.Send(i, data);
+            base.Send(i, messageType, data);
         }            
     }
 }

@@ -4,17 +4,18 @@ using System.Collections;
 public enum MessageType
 {
     SetUp,
-    StateUpdate
+    StateUpdate,
+    None
 }
 
 [System.Serializable]
 public class Message {
-    public MessageType type;    
+    public MessageType type;
     public string subJson;
 
-    public Message(MessageType type, string subJson)
+    public Message(MessageType type = MessageType.None, object data = null)
     {       
         this.type = type;
-        this.subJson = subJson;
+        this.subJson = JsonUtility.ToJson(data);
     }
 }

@@ -7,8 +7,7 @@ public class ClientManager : NetworkHost {
 
     public Player player;
     private Camera _mainCamera;
-    private int connectionToServer;
-    //private Message message = new Message(MessageType.SetUp, "blank");    
+    private int connectionToServer;    
 
     void Awake()
     {
@@ -20,17 +19,17 @@ public class ClientManager : NetworkHost {
     {
         PollMovement();
         UpdateGrid();
-        base.Send(connectionToServer, System.Text.Encoding.UTF8.GetBytes("Hello Server"));
+        //base.Send(connectionToServer, System.Text.Encoding.UTF8.GetBytes("Hello Server"));
 
-        ReceiveEvent eventData = base.Receive();
-        if (eventData.type == NetworkEventType.DataEvent)
-        {
-            var message = JsonUtility.FromJson<Message>(System.Text.Encoding.UTF8.GetString(eventData.data));
+        ReceiveEvent recEvent = base.Receive();
+        if (recEvent.type == NetworkEventType.DataEvent)
+        {            
+            var message = recEvent.message;
             if (message.type == MessageType.SetUp)
             {
-                var subMessage = JsonUtility.FromJson<CellID>(message.subJson);
+                CellID subMessage = JsonUtility.FromJson<CellID>(message.subJson);
                 Debug.Log(subMessage);
-            }            
+            }
         }        
 
         Render();

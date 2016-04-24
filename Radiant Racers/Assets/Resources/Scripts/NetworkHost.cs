@@ -11,14 +11,17 @@ public class NetworkHost : MonoBehaviour {
 
     public struct ReceiveEvent{
         public NetworkEventType type;
-        public int connectionID;
-        public byte[] data;
+        public int sender;
+        public Message message;
 
-        public ReceiveEvent(NetworkEventType type, int connectionID, byte[] data)
+        public ReceiveEvent(NetworkEventType type, int connectionID, byte[] message)
         {
             this.type = type;
-            this.connectionID = connectionID;
-            this.data = data;
+            this.sender = connectionID;
+            if (type != NetworkEventType.DataEvent)
+                this.message = new Message();
+            else
+                this.message = JsonUtility.FromJson<Message>(System.Text.Encoding.UTF8.GetString(message));
         }
     }
 
@@ -58,10 +61,11 @@ public class NetworkHost : MonoBehaviour {
         return new ReceiveEvent(recData, connectionID, recBuffer);
     }
 
-    public void Send(int connectionID, byte[] data)
+    public void Send(int connectionID, MessageType messageType, object data)
     {
+        string message = JsonUtility.ToJson(new Message(messageType, data));
         byte error;
-        NetworkTransport.Send(_hostID, connectionID, _myReliableChannelID, data, 1024, out error);
+        NetworkTransport.Send(_hostID, connectionID, _myReliableChannelID, System.Text.Encoding.UTF8.GetBytes(message), 1024, out error);
         //return error;
     }
 }
