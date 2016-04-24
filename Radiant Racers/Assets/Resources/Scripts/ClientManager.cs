@@ -3,19 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public class ClientManager : NetworkHost {
+public class ClientManager : NetworkHost {       
+
+    //private string _ip = "192.168.0.4";
+    //private int _portNum = 9001;
+    //public string IP { get { return this._ip; } set { this._ip = value; } }
+    //public int Port { get { return this._portNum; } set { this._portNum = value; } }
+    
 
     private bool _isGameStarted = false;
     private CellID _myPlayer;
     //private Camera _mainCamera;
     private int _server;
-    private Dictionary<CellID, GameObject> _playerTrails = new Dictionary<CellID, GameObject>();
+    private Dictionary<CellID, GameObject> _playerTrails = new Dictionary<CellID, GameObject>();    
 
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         base.Setup(Random.Range(9002, 65000), 1);
-        _server = base.Connect("104.33.20.133", 9001);
+        _server = base.Connect(NetworkHost.ServerIP, NetworkHost.Port);
 
         _playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
         _playerTrails[CellID.Player2] = Resources.Load("Prefabs/OrangeTrail") as GameObject;

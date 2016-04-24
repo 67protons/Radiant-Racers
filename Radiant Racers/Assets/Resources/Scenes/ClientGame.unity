@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 187406828}
   - 114: {fileID: 187406829}
-  - 114: {fileID: 187406830}
   m_Layer: 0
   m_Name: ClientGameManager
   m_TagString: Untagged
@@ -125,19 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5ac3a81baf8a44faecddd680893ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 401001596}
---- !u!114 &187406830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 187406827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7b9ae15b62438249805c8d0b87fd15d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: {x: 50, y: 50}
 --- !u!1 &367431803
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &401001595
 Transform:
   m_ObjectHideFlags: 0
@@ -237,6 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb93a7493edb5f4db27ac0aff54a1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 1
+  playerNum: 0
 --- !u!1 &1752518098
 GameObject:
   m_ObjectHideFlags: 0

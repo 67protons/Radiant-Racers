@@ -4,6 +4,9 @@ using UnityEngine.Networking;
 using System.IO;
 
 public class NetworkHost : MonoBehaviour {
+    public static string ServerIP = Network.player.ipAddress;
+    public static int Port = 9001;
+
     private ConnectionConfig _config;
     private int _myReliableChannelID, _myUnreliableChannelID;
     private HostTopology _topology;
@@ -30,9 +33,19 @@ public class NetworkHost : MonoBehaviour {
         NetworkTransport.Init();
         _config = new ConnectionConfig();
         _myReliableChannelID = _config.AddChannel(QosType.Reliable);
-        _myUnreliableChannelID = _config.AddChannel(QosType.Unreliable);
+        //_myUnreliableChannelID = _config.AddChannel(QosType.Unreliable);
         _topology = new HostTopology(_config, maxConnections);
-        _hostID = NetworkTransport.AddHost(_topology, port);  
+        _hostID = NetworkTransport.AddHost(_topology, port);
+    }
+
+    public void Setup(int port, int maxConnections, string ipAdress)
+    {
+        NetworkTransport.Init();
+        _config = new ConnectionConfig();
+        _myReliableChannelID = _config.AddChannel(QosType.Reliable);
+        //_myUnreliableChannelID = _config.AddChannel(QosType.Unreliable);
+        _topology = new HostTopology(_config, maxConnections);
+        _hostID = NetworkTransport.AddHost(_topology, port, ipAdress);
     }
 
     public int Connect(string ipAddress, int port)
