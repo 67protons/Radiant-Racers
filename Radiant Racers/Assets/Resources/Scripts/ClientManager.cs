@@ -1,22 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class ClientManager : NetworkHost {
 
-    public Player player;
+    //public Player player;
     private CellID myPlayer;
-    private Camera _mainCamera;
-    private int _server;    
+    //private Camera _mainCamera;
+    private int _server;
+    private Dictionary<CellID, GameObject> _playerTrails = new Dictionary<CellID, GameObject>();
 
     void Awake()
     {
         base.Setup(Random.Range(9002, 65000), 1);
         _server = base.Connect("104.33.20.133", 9001);
-        _mainCamera = Camera.main;
+
+        _playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player2] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player3] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player4] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player5] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player6] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player7] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player8] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        //_mainCamera = Camera.main;
     }
     void Update()
-    {
+    {        
         PollMovement();        
         //base.Send(connectionToServer, System.Text.Encoding.UTF8.GetBytes("Hello Server"));
 
@@ -29,6 +40,20 @@ public class ClientManager : NetworkHost {
                 CellID playerNum = (CellID)message.GetData();
                 myPlayer = playerNum;
                 Debug.Log(myPlayer);
+            }
+            else if (message.type == MessageType.StateUpdate)
+            {
+                ChangeLog changes = (ChangeLog)message.GetData();
+                foreach (CellID playerNum in changes.PlayerLocations.Keys)
+                {
+                    if (playerNum == myPlayer)
+                        //This needs to be cleaned up after I set each player's position
+                        Camera.main.transform.position = new Vector3(changes.PlayerLocations[playerNum].x, changes.PlayerLocations[playerNum].y, -10);
+                }
+                foreach (var kvp in changes.ChangedCells)
+                {                    
+                    Instantiate(_playerTrails[kvp.Value], new Vector2(kvp.Key.x, -kvp.Key.y), Quaternion.identity);
+                }
             }
         }        
 
@@ -70,7 +95,7 @@ public class ClientManager : NetworkHost {
 
     void Render()
     {
-        if (player != null)
-            _mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+        //if (player != null)
+        //    _mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
     }
 }

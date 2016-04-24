@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
+    public bool isAlive = true;
     public CellID playerNum;
 
     private Direction _currentDirection;
@@ -47,14 +48,17 @@ public class Player : MonoBehaviour {
 
     public void SetPosition(Vector2 gridPosition)
     {
-        gridPosition.x += 0.5f;
-        gridPosition.y = -gridPosition.y - 0.5f;
-        this.transform.position = gridPosition;
+        if (this.isAlive)
+        {
+            gridPosition.x += 0.5f;
+            gridPosition.y = -gridPosition.y - 0.5f;
+            this.transform.position = gridPosition;
+        }       
     }
 
     public void SetDirection(Direction direction)
     {
-        if (this._currentDirection != OppositeDirection(direction))
+        if (this.isAlive && this._currentDirection != OppositeDirection(direction))
         {
             SetPosition(GridManager.GridPosition(this.transform.position));
             this._currentDirection = direction;

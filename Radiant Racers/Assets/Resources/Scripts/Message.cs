@@ -28,7 +28,10 @@ public class Message {
                 return JsonUtility.FromJson<CellID>(subJson);
             case MessageType.Move:
                 return JsonUtility.FromJson<Direction>(subJson);
+            case MessageType.StateUpdate:
+                return JsonUtility.FromJson<ChangeLog>(subJson);
             default:
+                Debug.Log("Nothing written");
                 return null;
         }
     }
