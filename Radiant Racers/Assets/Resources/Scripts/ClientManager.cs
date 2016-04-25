@@ -24,14 +24,7 @@ public class ClientManager : NetworkHost {
         base.Setup(Random.Range(9002, 65000), 1);
         _server = base.Connect(NetworkHost.ServerIP, NetworkHost.Port);
 
-        _playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player2] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player3] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player4] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player5] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player6] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player7] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
-        _playerTrails[CellID.Player8] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        
         //_mainCamera = Camera.main;
     }
     void Update()
@@ -49,6 +42,7 @@ public class ClientManager : NetworkHost {
             {
                 CellID playerNum = (CellID)message.GetData();
                 _myPlayer = playerNum;
+                Debug.Log(playerNum);
                 StartGame();
             }
             else if (message.type == MessageType.StateUpdate)
@@ -96,6 +90,15 @@ public class ClientManager : NetworkHost {
 
     void StartGame()
     {
+        _playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
+        _playerTrails[CellID.Player2] = Resources.Load("Prefabs/GreenTrail") as GameObject;
+        _playerTrails[CellID.Player3] = Resources.Load("Prefabs/BlueTrail") as GameObject;
+        _playerTrails[CellID.Player4] = Resources.Load("Prefabs/YellowTrail") as GameObject;
+        _playerTrails[CellID.Player5] = Resources.Load("Prefabs/PurpleTrail") as GameObject;
+        _playerTrails[CellID.Player6] = Resources.Load("Prefabs/RedTrail") as GameObject;
+        _playerTrails[CellID.Player7] = Resources.Load("Prefabs/PinkTrail") as GameObject;
+        _playerTrails[CellID.Player8] = Resources.Load("Prefabs/BrownTrail") as GameObject;
+
         _players[CellID.Player1] = GameObject.Find("Player1");
         _players[CellID.Player2] = GameObject.Find("Player2");
         _players[CellID.Player3] = GameObject.Find("Player3");
