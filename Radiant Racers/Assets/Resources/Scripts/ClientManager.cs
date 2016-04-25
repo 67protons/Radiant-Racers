@@ -71,9 +71,7 @@ public class ClientManager : NetworkHost {
                 {
                     if (!changes.PlayerLocations.ContainsKey(kvp.Key))
                     {
-                        kvp.Value.playerObject.SetActive(false);
-                        kvp.Value.playerImage.SetActive(false);
-                        //_players.Remove(kvp.Key);
+                        kvp.Value.isDeadImage.SetActive(true);
                     }
                 }
                 
@@ -81,17 +79,14 @@ public class ClientManager : NetworkHost {
                 {
                     CellID playerNum = playerTransform.Key;
                     Vector2 position = (Vector2)playerTransform.Value;
-                    float rotation = playerTransform.Value.z;
-                    //_players[playerNum].transform.position = position;
-                    //_players[playerNum].transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation));
+                    float rotation = playerTransform.Value.z;                    
                     _players[playerNum].playerObject.transform.position = position;
                     _players[playerNum].playerObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation));
                     if (playerTransform.Key == _myPlayer)                        
                         Camera.main.transform.position = new Vector3(position.x, position.y, -10);                        
                 }
                 foreach (var kvp in changes.ChangedCells)
-                {
-                    //Instantiate(_playerTrails[kvp.Value], new Vector2(kvp.Key.x, -kvp.Key.y), Quaternion.identity);
+                {                    
                     Instantiate(_players[kvp.Value].playerTrail, new Vector2(kvp.Key.x, -kvp.Key.y), Quaternion.identity);
                 }
             }
@@ -125,11 +120,11 @@ public class ClientManager : NetworkHost {
 
     void StartGame(List<CellID> activePlayers)
     {
-        //Find UI Objects
+        ///Find UI Objects
         _hud = GameObject.Find("HUD");
         _hudArrow = _hud.transform.FindChild("Arrow").GetComponent<RectTransform>();
 
-        //Grab all PlayerData that is an active player
+        ///Grab all PlayerData that is an active player
         foreach (CellID playerNum in CellID.GetValues(typeof(CellID)))
         {
             if (playerNum != CellID.None && playerNum != CellID.Wall)
@@ -151,6 +146,7 @@ public class ClientManager : NetworkHost {
             }
         }  
 
+        ///Set myPlayer
         _myPlayer = activePlayers[0];
         Debug.Log(_myPlayer);
         //_playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
