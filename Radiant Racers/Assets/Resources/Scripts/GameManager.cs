@@ -26,16 +26,12 @@ public class GameManager : MonoBehaviour {
 
     void LateUpdate()
     {
-        ChangeLog changes = new ChangeLog();        
-        //Dictionary<string, int> changeLog = new Dictionary<string, int>();
+        ChangeLog changes = new ChangeLog();                
         foreach (Player player in Players.Values){
             if (player.isAlive)
-            {
-                //Vector2 oldLoc = GridManager.GridPosition(player.transform.position);
+            {                
                 Vector2 oldLoc = GridManager.GridPosition(player.position);
-                player.Move();                
-                //changes.PlayerLocations.Add(player.playerNum, player.transform.position);
-                //Vector2 newLoc = GridManager.GridPosition(player.transform.position);
+                player.Move();
                 changes.PlayerLocations.Add(player.playerNum, new Vector3(player.position.x, player.position.y, player.rotation));
                 Vector2 newLoc = GridManager.GridPosition(player.position);
                 if (newLoc != oldLoc)
@@ -79,8 +75,7 @@ public class GameManager : MonoBehaviour {
         availableNums.Remove(randPlayerNum);
 
         ///Grab the player associated with the random playerNum and assign it that number
-        GameObject player = GameObject.Find(randPlayerNum.ToString());
-        //Player playerScript = player.AddComponent<Player>();
+        //GameObject player = GameObject.Find(randPlayerNum.ToString());        
         Player playerScript = new Player();
         playerScript.playerNum = randPlayerNum;
 

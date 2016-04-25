@@ -3,21 +3,16 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-public class ServerManager : NetworkHost {        
-    // Might change this to a list of Player classes in the future
+public class ServerManager : NetworkHost {    
     public List<int> clientList = new List<int>();
 
     [HideInInspector]
     public GameManager _gameManager;
-    //private int _portNum = 9001;
-
-    //public int Port { get { return this._portNum; } set { this._portNum = value; } }
 
     void Awake(){
         DontDestroyOnLoad(this.gameObject);
         //base.Setup(NetworkHost.Port, 8, NetworkHost.ServerIP);
-        base.Setup(NetworkHost.Port, 8);
-        //Debug.Log(NetworkHost.ServerIP);
+        base.Setup(NetworkHost.Port, 8);        
     }
 
     void Update()
@@ -38,9 +33,7 @@ public class ServerManager : NetworkHost {
                 break;
             case NetworkEventType.DisconnectEvent:
                 break;
-        }
-
-        //SendAll(System.Text.Encoding.UTF8.GetBytes("Hello"));        
+        }   
     }
 
     public void SendAll(MessageType messageType, object data)
