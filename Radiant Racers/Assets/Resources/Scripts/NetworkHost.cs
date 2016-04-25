@@ -52,7 +52,7 @@ public class NetworkHost : MonoBehaviour {
     public int Connect(string ipAddress, int port)
     {
         byte error;
-        int connectionID = NetworkTransport.Connect(_hostID, "192.168.0.4", 9001, 0, out error);
+        int connectionID = NetworkTransport.Connect(_hostID, ipAddress, port, 0, out error);
         if (error == 0)
         {
             return connectionID;
