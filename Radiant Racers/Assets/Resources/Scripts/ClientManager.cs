@@ -67,17 +67,26 @@ public class ClientManager : NetworkHost {
             else if (message.type == MessageType.StateUpdate)
             {
                 ChangeLog changes = (ChangeLog)message.GetData();
-                //foreach (CellID playerNum in changes.PlayerLocations.Keys)
-                foreach (var playerData in changes.PlayerLocations)
+                foreach (var kvp in _players)
                 {
-                    CellID playerNum = playerData.Key;
-                    Vector2 position = (Vector2)playerData.Value;
-                    float rotation = playerData.Value.z;
+                    if (!changes.PlayerLocations.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.playerObject.SetActive(false);
+                        kvp.Value.playerImage.SetActive(false);
+                        //_players.Remove(kvp.Key);
+                    }
+                }
+                
+                foreach (var playerTransform in changes.PlayerLocations)
+                {
+                    CellID playerNum = playerTransform.Key;
+                    Vector2 position = (Vector2)playerTransform.Value;
+                    float rotation = playerTransform.Value.z;
                     //_players[playerNum].transform.position = position;
                     //_players[playerNum].transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation));
                     _players[playerNum].playerObject.transform.position = position;
                     _players[playerNum].playerObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation));
-                    if (playerData.Key == _myPlayer)                        
+                    if (playerTransform.Key == _myPlayer)                        
                         Camera.main.transform.position = new Vector3(position.x, position.y, -10);                        
                 }
                 foreach (var kvp in changes.ChangedCells)
@@ -111,7 +120,7 @@ public class ClientManager : NetworkHost {
 
     void ManageHud()
     {
-        _hudArrow.localPosition = new Vector3(-35, 140, 0);
+        _hudArrow.localPosition = _players[_myPlayer].playerImage.transform.localPosition - new Vector3(50, 0, 0);
     }
 
     void StartGame()
