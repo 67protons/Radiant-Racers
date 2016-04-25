@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum MessageType
 {    
@@ -7,6 +8,16 @@ public enum MessageType
     StateUpdate,
     Move,
     None
+}
+
+[System.Serializable]
+public struct SetUpMessage
+{
+    public List<CellID> activePlayers;
+    public SetUpMessage(List<CellID> activePlayers)
+    {
+        this.activePlayers = activePlayers;
+    }
 }
 
 [System.Serializable]
@@ -25,7 +36,7 @@ public class Message {
         switch (this.type)
         {
             case MessageType.SetUp:
-                return JsonUtility.FromJson<CellID>(subJson);
+                return JsonUtility.FromJson<SetUpMessage>(subJson);
             case MessageType.Move:
                 return JsonUtility.FromJson<Direction>(subJson);
             case MessageType.StateUpdate:

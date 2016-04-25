@@ -57,7 +57,11 @@ public class GameManager : MonoBehaviour {
     }
 
     void StartGame()
-    {        
+    {
+        List<CellID> activePlayers = new List<CellID>();
+        //int length = 0;
+        //CellID[] activePlayers = new CellID[8];
+
         foreach (int i in _server.clientList)
         {
             if (Players.ContainsKey(i))
@@ -67,12 +71,31 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                CreatePlayer(i);                             
+                //activePlayers[length++] = CreatePlayer(i);                
+                activePlayers.Add(CreatePlayer(i));
             }
+        }
+
+        foreach (var kvp in Players)
+        {
+            int index = activePlayers.IndexOf(kvp.Value.playerNum);
+            //int index = 0;
+            //for (int i = 0; i < activePlayers.Length; i++)
+            //{
+            //    if (activePlayers[i] == kvp.Value.playerNum)
+            //    {
+            //        index = i;
+            //        break;
+            //    }
+            //}
+            CellID tmp = activePlayers[0];
+            activePlayers[0] = kvp.Value.playerNum;
+            activePlayers[index] = tmp;
+            _server.Send(kvp.Key, MessageType.SetUp, new SetUpMessage(activePlayers));
         }
     }
 
-    void CreatePlayer(int connectionID)
+    private CellID CreatePlayer(int connectionID)
     {
         ///Choose random playerNum (that isn't already taken)
         CellID randPlayerNum;
@@ -100,8 +123,10 @@ public class GameManager : MonoBehaviour {
 
         ///Add new Player to dictionary
         Players.Add(connectionID, playerScript);
+        Debug.Log(randPlayerNum);
         
-        ///Send over the playerNum to that player - might take this out later
-        _server.Send(connectionID, MessageType.SetUp, randPlayerNum);        
+        /////Send over the playerNum to that player - might take this out later
+        //_server.Send(connectionID, MessageType.SetUp, randPlayerNum);
+        return randPlayerNum;
     }
 }

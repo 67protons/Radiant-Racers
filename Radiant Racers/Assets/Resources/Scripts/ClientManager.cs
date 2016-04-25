@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public struct PlayerData
 {
-    public GameObject playerObject, playerTrail, playerImage;
+    public GameObject playerObject, playerTrail, playerImage, isDeadImage;
     public PlayerData(GameObject playerObject, GameObject playerTrail, GameObject playerImage)
     {
         this.playerObject = playerObject;
         this.playerTrail = playerTrail;
         this.playerImage = playerImage;
+        this.isDeadImage = playerImage.transform.FindChild("isDead").gameObject;
     }
 }
 
@@ -45,6 +46,7 @@ public class ClientManager : NetworkHost {
         
         //_mainCamera = Camera.main;
     }
+    
     void Update()
     {
         if (_isGameStarted)
@@ -59,10 +61,8 @@ public class ClientManager : NetworkHost {
             Message message = recEvent.message;
             if (message.type == MessageType.SetUp)
             {
-                CellID playerNum = (CellID)message.GetData();
-                _myPlayer = playerNum;
-                Debug.Log(playerNum);
-                StartGame();
+                SetUpMessage setupMessage = (SetUpMessage)message.GetData();                
+                StartGame(setupMessage.activePlayers);
             }
             else if (message.type == MessageType.StateUpdate)
             {
@@ -123,8 +123,36 @@ public class ClientManager : NetworkHost {
         _hudArrow.localPosition = _players[_myPlayer].playerImage.transform.localPosition - new Vector3(50, 0, 0);
     }
 
-    void StartGame()
+    void StartGame(List<CellID> activePlayers)
     {
+        //Find UI Objects
+        _hud = GameObject.Find("HUD");
+        _hudArrow = _hud.transform.FindChild("Arrow").GetComponent<RectTransform>();
+
+        //Grab all PlayerData that is an active player
+        foreach (CellID playerNum in CellID.GetValues(typeof(CellID)))
+        {
+            if (playerNum != CellID.None && playerNum != CellID.Wall)
+            {
+                PlayerData playerData = new PlayerData(
+                    GameObject.Find(playerNum.ToString()),
+                    Resources.Load("Prefabs/" + playerNum.ToString() + "Trail") as GameObject,
+                    GameObject.Find(playerNum.ToString() + "Image"));
+                if (activePlayers.Contains(playerNum))
+                {
+                    playerData.isDeadImage.SetActive(false);
+                    _players.Add(playerNum, playerData);
+                }
+                else
+                {
+                    playerData.playerObject.SetActive(false);
+                    playerData.playerImage.SetActive(false);
+                }
+            }
+        }  
+
+        _myPlayer = activePlayers[0];
+        Debug.Log(_myPlayer);
         //_playerTrails[CellID.Player1] = Resources.Load("Prefabs/OrangeTrail") as GameObject;
         //_playerTrails[CellID.Player2] = Resources.Load("Prefabs/GreenTrail") as GameObject;
         //_playerTrails[CellID.Player3] = Resources.Load("Prefabs/BlueTrail") as GameObject;
@@ -143,17 +171,18 @@ public class ClientManager : NetworkHost {
         //_players[CellID.Player7] = GameObject.Find("Player7");
         //_players[CellID.Player8] = GameObject.Find("Player8");
 
-        _players[CellID.Player1] = new PlayerData(GameObject.Find("Player1"), Resources.Load("Prefabs/OrangeTrail") as GameObject, GameObject.Find("Player1Image"));
-        _players[CellID.Player2] = new PlayerData(GameObject.Find("Player2"), Resources.Load("Prefabs/GreenTrail") as GameObject, GameObject.Find("Player2Image"));
-        _players[CellID.Player3] = new PlayerData(GameObject.Find("Player3"), Resources.Load("Prefabs/BlueTrail") as GameObject, GameObject.Find("Player3Image"));
-        _players[CellID.Player4] = new PlayerData(GameObject.Find("Player4"), Resources.Load("Prefabs/YellowTrail") as GameObject, GameObject.Find("Player4Image"));
-        _players[CellID.Player5] = new PlayerData(GameObject.Find("Player5"), Resources.Load("Prefabs/PurpleTrail") as GameObject, GameObject.Find("Player5Image"));
-        _players[CellID.Player6] = new PlayerData(GameObject.Find("Player6"), Resources.Load("Prefabs/RedTrail") as GameObject, GameObject.Find("Player6Image"));
-        _players[CellID.Player7] = new PlayerData(GameObject.Find("Player7"), Resources.Load("Prefabs/PinkTrail") as GameObject, GameObject.Find("Player7Image"));
-        _players[CellID.Player8] = new PlayerData(GameObject.Find("Player8"), Resources.Load("Prefabs/BrownTrail") as GameObject, GameObject.Find("Player8Image"));
+        
 
-        _hud = GameObject.Find("HUD");
-        _hudArrow = _hud.transform.FindChild("Arrow").GetComponent<RectTransform>();
+        
+        //_players[CellID.Player1] = new PlayerData(GameObject.Find("Player1"), Resources.Load("Prefabs/OrangeTrail") as GameObject, GameObject.Find("Player1Image"));
+        //_players[CellID.Player2] = new PlayerData(GameObject.Find("Player2"), Resources.Load("Prefabs/GreenTrail") as GameObject, GameObject.Find("Player2Image"));
+        //_players[CellID.Player3] = new PlayerData(GameObject.Find("Player3"), Resources.Load("Prefabs/BlueTrail") as GameObject, GameObject.Find("Player3Image"));
+        //_players[CellID.Player4] = new PlayerData(GameObject.Find("Player4"), Resources.Load("Prefabs/YellowTrail") as GameObject, GameObject.Find("Player4Image"));
+        //_players[CellID.Player5] = new PlayerData(GameObject.Find("Player5"), Resources.Load("Prefabs/PurpleTrail") as GameObject, GameObject.Find("Player5Image"));
+        //_players[CellID.Player6] = new PlayerData(GameObject.Find("Player6"), Resources.Load("Prefabs/RedTrail") as GameObject, GameObject.Find("Player6Image"));
+        //_players[CellID.Player7] = new PlayerData(GameObject.Find("Player7"), Resources.Load("Prefabs/PinkTrail") as GameObject, GameObject.Find("Player7Image"));
+        //_players[CellID.Player8] = new PlayerData(GameObject.Find("Player8"), Resources.Load("Prefabs/BrownTrail") as GameObject, GameObject.Find("Player8Image"));
+        
         _isGameStarted = true;
     }
 }
