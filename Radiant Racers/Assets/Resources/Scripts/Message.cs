@@ -4,7 +4,7 @@ using System.Collections;
 public enum MessageType
 {    
     SetUp,
-    StateUpdate,    
+    StateUpdate,
     Move,
     None
 }

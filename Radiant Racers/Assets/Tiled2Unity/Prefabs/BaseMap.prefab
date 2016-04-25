@@ -258,12 +258,12 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0, y: 0}
-      - {x: 0, y: -50}
-      - {x: 50, y: -50}
-      - {x: 50, y: 0}
-    - - {x: 49, y: -1}
-      - {x: 49, y: -49}
-      - {x: 1, y: -49}
+      - {x: 0, y: -100}
+      - {x: 120, y: -100}
+      - {x: 120, y: 0}
+    - - {x: 119, y: -1}
+      - {x: 119, y: -99}
+      - {x: 1, y: -99}
       - {x: 1, y: -1}
 --- !u!114 &11410040
 MonoBehaviour:
@@ -311,13 +311,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0619e460a775cc458d37cb4a214a189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumTilesWide: 50
-  NumTilesHigh: 50
+  NumTilesWide: 120
+  NumTilesHigh: 100
   TileWidth: 32
   TileHeight: 32
   ExportScale: 0.03125
-  MapWidthInPixels: 1600
-  MapHeightInPixels: 1600
+  MapWidthInPixels: 3840
+  MapHeightInPixels: 3200
 --- !u!114 &11499586
 MonoBehaviour:
   m_ObjectHideFlags: 1

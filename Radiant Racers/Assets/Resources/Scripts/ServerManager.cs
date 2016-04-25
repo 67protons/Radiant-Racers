@@ -11,8 +11,8 @@ public class ServerManager : NetworkHost {
 
     void Awake(){
         DontDestroyOnLoad(this.gameObject);
-        //base.Setup(NetworkHost.Port, 8, NetworkHost.ServerIP);
-        base.Setup(NetworkHost.Port, 8);        
+        base.Setup(NetworkHost.Port, 8, NetworkHost.ServerIP);
+        //base.Setup(NetworkHost.Port, 8);        
     }
 
     void Update()

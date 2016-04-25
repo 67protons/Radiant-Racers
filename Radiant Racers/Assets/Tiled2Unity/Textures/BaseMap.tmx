@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="120" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="FloorTile" tilewidth="32" tileheight="32" tilecount="1">
   <image source="../../Resources/Art/FloorTile.png" width="32" height="32"/>
  </tileset>
@@ -11,14 +11,14 @@
    </objectgroup>
   </tile>
  </tileset>
- <layer name="Floor" width="50" height="50">
+ <layer name="Floor" width="120" height="100">
   <data encoding="base64" compression="zlib">
-   eJztzwENADAIwDDu3/RtFLIlFbCZO73l+rD0YenD0oelD0sflj4sfVj6sPRh6cPSh6UPSx+WPix9WPqw9GHpw9KHpQ9LH5Y+LNc+LvQBC2AJAQ==
+   eJztw0ENAAAMA6Grf9P7TAYkrJqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq/gOi1C7h
   </data>
  </layer>
- <layer name="Edges" width="50" height="50">
+ <layer name="Edges" width="120" height="100">
   <data encoding="base64" compression="zlib">
-   eJztzwEJADAMwLAx/6Jvox8JVEB3ZvZIv/PR4qPFR4uPFh8tPlp8tPho8dHio8VHi48WHy0+Wny0+Gjx0eKjxUeLjxYfLT5afLRc+7jQAxQiAYk=
+   eJzt0QEJAAAMw7Az/6LvIzRQBd3drehi6q+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr66+tv7b+2vpr669txfcrEANp
   </data>
  </layer>
 </map>

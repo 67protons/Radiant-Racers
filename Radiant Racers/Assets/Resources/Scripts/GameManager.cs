@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     
@@ -26,7 +27,11 @@ public class GameManager : MonoBehaviour {
 
     void LateUpdate()
     {
-        ChangeLog changes = new ChangeLog();                
+        if (Players.Count <= 1)
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        ChangeLog changes = new ChangeLog();        
         foreach (Player player in Players.Values){
             if (player.isAlive)
             {                
