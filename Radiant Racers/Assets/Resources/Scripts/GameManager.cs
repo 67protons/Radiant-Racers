@@ -31,21 +31,22 @@ public class GameManager : MonoBehaviour {
         foreach (Player player in Players.Values){
             if (player.isAlive)
             {
-                Vector2 oldLoc = GridManager.GridPosition(player.transform.position);
+                //Vector2 oldLoc = GridManager.GridPosition(player.transform.position);
+                Vector2 oldLoc = GridManager.GridPosition(player.position);
                 player.Move();                
-                changes.PlayerLocations.Add(player.playerNum, player.transform.position);
-                Vector2 newLoc = GridManager.GridPosition(player.transform.position);
+                //changes.PlayerLocations.Add(player.playerNum, player.transform.position);
+                //Vector2 newLoc = GridManager.GridPosition(player.transform.position);
+                changes.PlayerLocations.Add(player.playerNum, new Vector3(player.position.x, player.position.y, player.rotation));
+                Vector2 newLoc = GridManager.GridPosition(player.position);
                 if (newLoc != oldLoc)
                 {
+                    _grid.SetCell(oldLoc, player.playerNum);
+                    changes.ChangedCells.Add(oldLoc, player.playerNum);
+
                     if (_grid.GetCell(newLoc) != CellID.None)
                     {
                         player.isAlive = false;
                         Debug.Log("Player " + player.playerNum + " died");
-                    }
-                    else
-                    {
-                        _grid.SetCell(newLoc, player.playerNum);                        
-                        changes.ChangedCells.Add(newLoc, player.playerNum);                        
                     }
                 }
             }            
@@ -72,34 +73,35 @@ public class GameManager : MonoBehaviour {
 
     void CreatePlayer(int connectionID)
     {
+        ///Choose random playerNum (that isn't already taken)
+        CellID randPlayerNum;
+        randPlayerNum = availableNums[Random.Range(0, availableNums.Count)];        
+        availableNums.Remove(randPlayerNum);
+
+        ///Grab the player associated with the random playerNum and assign it that number
+        GameObject player = GameObject.Find(randPlayerNum.ToString());
+        //Player playerScript = player.AddComponent<Player>();
+        Player playerScript = new Player();
+        playerScript.playerNum = randPlayerNum;
+
         ///Choose random position
         List<Vector2> emptyCells = _grid.EmptyCells();
         Vector2 randomCell = emptyCells[Random.Range(0, emptyCells.Count)];
-        randomCell.x += 0.5f;
-        randomCell.y = -randomCell.y - 0.5f;
-
-        GameObject newPlayer = (GameObject)Instantiate(Resources.Load("Prefabs/Player") as GameObject, randomCell, Quaternion.identity);
-        Player playerScript = newPlayer.GetComponent<Player>();
+        playerScript.SetPosition(randomCell);
 
         ///Set direction (also avoid defaulting into a wall)        
         if (randomCell.x < _grid.gridSize.x / 2){            
             playerScript.SetDirection(Direction.Right, true);
-        }            
+        }
         else if (randomCell.x >= _grid.gridSize.x / 2)
-        {            
+        {
             playerScript.SetDirection(Direction.Left, true);
         }
-
-        ///Choose random playerNum (that isn't already taken)
-        CellID randomNum;        
-        randomNum = availableNums[Random.Range(0, availableNums.Count)];
-        playerScript.playerNum = randomNum;
-        availableNums.Remove(randomNum);       
 
         ///Add new Player to dictionary
         Players.Add(connectionID, playerScript);
         
         ///Send over the playerNum to that player - might take this out later
-        _server.Send(connectionID, MessageType.SetUp, randomNum);        
+        _server.Send(connectionID, MessageType.SetUp, randPlayerNum);        
     }
 }

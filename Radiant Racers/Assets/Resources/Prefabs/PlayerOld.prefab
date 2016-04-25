@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 481882}
   - 114: {fileID: 11465732}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb93a7493edb5f4db27ac0aff54a1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 1
+  playerNum: 0
 --- !u!212 &21205722
 SpriteRenderer:
   m_ObjectHideFlags: 1

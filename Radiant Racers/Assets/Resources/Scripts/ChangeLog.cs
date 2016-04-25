@@ -2,13 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
+//[System.Serializable]
+//public struct PlayerData
+//{
+//    public CellID playerNum;
+//    public Vector2 position;
+//    public float rotation;
+//}
+
 [System.Serializable]
 public class ChangeLog : ISerializationCallbackReceiver {
-    public Dictionary<CellID, Vector2> PlayerLocations = new Dictionary<CellID, Vector2>();
+    public Dictionary<CellID, Vector3> PlayerLocations = new Dictionary<CellID, Vector3>();
     public Dictionary<Vector2, CellID> ChangedCells = new Dictionary<Vector2, CellID>();
 
     public List<CellID> _locKeys = new List<CellID>();
-    public List<Vector2> _locVals = new List<Vector2>();
+    public List<Vector3> _locVals = new List<Vector3>();
     public List<Vector2> _cellKeys = new List<Vector2>();
     public List<CellID> _cellVals = new List<CellID>();
  

@@ -15,7 +15,8 @@ public class ClientManager : NetworkHost {
     private CellID _myPlayer;
     //private Camera _mainCamera;
     private int _server;
-    private Dictionary<CellID, GameObject> _playerTrails = new Dictionary<CellID, GameObject>();    
+    private Dictionary<CellID, GameObject> _playerTrails = new Dictionary<CellID, GameObject>();
+    private Dictionary<CellID, GameObject> _players = new Dictionary<CellID, GameObject>();
 
     void Awake()
     {
@@ -48,16 +49,22 @@ public class ClientManager : NetworkHost {
             {
                 CellID playerNum = (CellID)message.GetData();
                 _myPlayer = playerNum;
-                _isGameStarted = true;
+                StartGame();
             }
             else if (message.type == MessageType.StateUpdate)
             {
                 ChangeLog changes = (ChangeLog)message.GetData();
-                foreach (CellID playerNum in changes.PlayerLocations.Keys)
+                //foreach (CellID playerNum in changes.PlayerLocations.Keys)
+                foreach (var playerData in changes.PlayerLocations)
                 {
-                    if (playerNum == _myPlayer)
+                    CellID playerNum = playerData.Key;
+                    Vector2 position = (Vector2)playerData.Value;
+                    float rotation = playerData.Value.z;
+                    _players[playerNum].transform.position = position;
+                    _players[playerNum].transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation));
+                    if (playerData.Key == _myPlayer)
                         //This needs to be cleaned up after I set each player's position
-                        Camera.main.transform.position = new Vector3(changes.PlayerLocations[playerNum].x, changes.PlayerLocations[playerNum].y, -10);
+                        Camera.main.transform.position = new Vector3(position.x, position.y, -10);                        
                 }
                 foreach (var kvp in changes.ChangedCells)
                 {
@@ -85,5 +92,18 @@ public class ClientManager : NetworkHost {
         {
             base.Send(_server, MessageType.Move, Direction.Down);            
         }        
+    }
+
+    void StartGame()
+    {
+        _players[CellID.Player1] = GameObject.Find("Player1");
+        _players[CellID.Player2] = GameObject.Find("Player2");
+        _players[CellID.Player3] = GameObject.Find("Player3");
+        _players[CellID.Player4] = GameObject.Find("Player4");
+        _players[CellID.Player5] = GameObject.Find("Player5");
+        _players[CellID.Player6] = GameObject.Find("Player6");
+        _players[CellID.Player7] = GameObject.Find("Player7");
+        _players[CellID.Player8] = GameObject.Find("Player8");
+        _isGameStarted = true;
     }
 }
