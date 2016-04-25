@@ -4,7 +4,8 @@ using UnityEngine.Networking;
 using System.IO;
 
 public class NetworkHost : MonoBehaviour {
-    public static string ServerIP = Network.player.ipAddress;
+    //public static string ServerIP = Network.player.ipAddress;
+    public static string ServerIP = "104.33.20.133";
     public static int Port = 9001;
 
     private ConnectionConfig _config;

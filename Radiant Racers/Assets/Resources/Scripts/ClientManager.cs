@@ -20,7 +20,7 @@ public class ClientManager : NetworkHost {
 
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         base.Setup(Random.Range(9002, 65000), 1);
         _server = base.Connect(NetworkHost.ServerIP, NetworkHost.Port);
 
