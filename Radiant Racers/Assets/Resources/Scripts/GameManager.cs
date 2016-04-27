@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     
@@ -27,10 +26,6 @@ public class GameManager : MonoBehaviour {
 
     void LateUpdate()
     {
-        //if (Players.Count <= 1)
-        //{
-        //    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //}
         ChangeLog changes = new ChangeLog();        
         foreach (Player player in Players.Values){
             if (player.isAlive)
@@ -59,8 +54,6 @@ public class GameManager : MonoBehaviour {
     void StartGame()
     {
         List<CellID> activePlayers = new List<CellID>();
-        //int length = 0;
-        //CellID[] activePlayers = new CellID[8];
 
         foreach (int i in _server.clientList)
         {
@@ -71,7 +64,6 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                //activePlayers[length++] = CreatePlayer(i);                
                 activePlayers.Add(CreatePlayer(i));
             }
         }
@@ -79,15 +71,6 @@ public class GameManager : MonoBehaviour {
         foreach (var kvp in Players)
         {
             int index = activePlayers.IndexOf(kvp.Value.playerNum);
-            //int index = 0;
-            //for (int i = 0; i < activePlayers.Length; i++)
-            //{
-            //    if (activePlayers[i] == kvp.Value.playerNum)
-            //    {
-            //        index = i;
-            //        break;
-            //    }
-            //}
             CellID tmp = activePlayers[0];
             activePlayers[0] = kvp.Value.playerNum;
             activePlayers[index] = tmp;
@@ -102,8 +85,7 @@ public class GameManager : MonoBehaviour {
         randPlayerNum = availableNums[Random.Range(0, availableNums.Count)];        
         availableNums.Remove(randPlayerNum);
 
-        ///Grab the player associated with the random playerNum and assign it that number
-        //GameObject player = GameObject.Find(randPlayerNum.ToString());        
+        ///Grab the player associated with the random playerNum and assign it that number           
         Player playerScript = new Player();
         playerScript.playerNum = randPlayerNum;
 
@@ -125,8 +107,7 @@ public class GameManager : MonoBehaviour {
         Players.Add(connectionID, playerScript);
         Debug.Log(randPlayerNum);
         
-        /////Send over the playerNum to that player - might take this out later
-        //_server.Send(connectionID, MessageType.SetUp, randPlayerNum);
+        ///Send over the playerNum to that player - might take this out later        
         return randPlayerNum;
     }
 }
